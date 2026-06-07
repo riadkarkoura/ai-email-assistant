@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Email Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>AI Email Assistant</h1>
+
+    <textarea id="emailInput" placeholder="Paste email here"></textarea>
+
+    <br><br>
+
+    <button onclick="analyzeEmail()">
+        Analyze Email
+    </button>
+
+    <h3>Summary</h3>
+    <p id="summary"></p>
+
+    <h3>Importance</h3>
+    <p id="importance"></p>
+
+    <h3>Suggested Reply</h3>
+    <p id="reply"></p>
+
+    <br>
+
+    <button onclick="saveAutomationLog()">
+        Save Automation Log
+    </button>
+
+    <h3>Automation Log</h3>
+
+    <ul id="logList"></ul>
+<button onclick="clearLogs()">
+    Clear Logs
+</button>
+<button onclick="exportLogs()">
+    Export Logs
+</button>
+<button onclick="sendToWebhook()">
+    Send to Webhook
+</button>
+    <script src="script.js"></script>
+
+</body>
+</html>

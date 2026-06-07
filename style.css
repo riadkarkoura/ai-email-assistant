@@ -1,0 +1,28 @@
+function analyzeEmail() {
+
+    let email =
+        document.getElementById("emailInput").value;
+
+    if (email.includes("urgent")) {
+
+        document.getElementById("summary").innerText =
+            "Urgent request detected";
+
+        document.getElementById("importance").innerText =
+            "High";
+
+        document.getElementById("reply").innerText =
+            "Thank you. I will handle this immediately.";
+
+    } else {
+
+        document.getElementById("summary").innerText =
+            "Regular email";
+
+        document.getElementById("importance").innerText =
+            "Low";
+
+        document.getElementById("reply").innerText =
+            "Thank you for your email.";
+    }
+}
