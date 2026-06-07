@@ -1,0 +1,138 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ea9f71ed-14fe-4ccb-b0ff-600200f1916f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "60755ec7-1a3a-4c68-8a03-361a790822b1",
+      "name": "Webhook",
+      "webhookId": "ea9f71ed-14fe-4ccb-b0ff-600200f1916f"
+    },
+    {
+      "parameters": {
+        "jsCode": "const logs = JSON.parse($json.body);\n\nreturn logs.map(log => {\n  return {\n    json: {\n      summary: log.summary,\n      importance: log.importance,\n      reply: log.reply\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "81a70ad5-9ba4-4284-810a-17b18c757990",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d1b92445-55f1-49bd-876c-b1878a0668d2",
+              "leftValue": "={{ $json.importance }}",
+              "rightValue": "High",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "926b0f3b-c281-4b8b-a1d8-e07c6864ada2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "5817068261",
+        "text": "=🚨 High Priority Email  Summary: {{ $json.summary }}  Importance: {{ $json.importance }}  Reply: {{ $json.reply }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "1ae1137a-f75f-49e6-8097-0997c05db4cd",
+      "name": "Send a text message",
+      "webhookId": "b7b27cca-4c8d-4bed-9abe-ee54b91f5f68",
+      "credentials": {
+        "telegramApi": {
+          "id": "on8vVzKyvJzBvBng",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c2b02943-22ae-4704-8afe-28c89b3c1c20",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3730f1404be97f48c8a4d4bd28ed5a7c49fc8d13f2f8dc47300cfefaf5f30a6b"
+  },
+  "nodeGroups": [],
+  "id": "nQUFqKCSCgpVAgmH",
+  "tags": []
+}
